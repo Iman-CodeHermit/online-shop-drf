@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .serializers import UserRegisterSerializer
 from django.contrib.auth.models import User
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -17,5 +18,11 @@ class UserRegisterView(APIView):
                 password = ser_data.validated_data['password'],
             )
             return Response(ser_data.data, status=status.HTTP_201_CREATED)
-
         return Response(ser_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
