@@ -27,3 +27,13 @@ class Payment(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
     transaction_id = models.CharField(max_length=256, blank=True, null=True)
+
+class Wish(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='productwish')
+
+    class Meta:
+        unique_together = ('user', 'product')
+
+    def __str__(self):
+        return f'{self.user} wish {self.product}'
