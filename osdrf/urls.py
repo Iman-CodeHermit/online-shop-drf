@@ -5,4 +5,5 @@ urlpatterns = [
     path('store/', include('store.urls')),
     path('', include('home.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('orders/', include('orders.urls', namespace='orders')),
 ]
