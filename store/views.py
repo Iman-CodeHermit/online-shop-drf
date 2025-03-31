@@ -6,7 +6,6 @@ from .models import Product, Category, Wish
 from .serializers import CategorySerializer, ProductSerializer, WishListSerializer
 
 # Create your views here.
-
 class CategoryView(APIView):
     def get(self, request):
         categories = Category.objects.all()
@@ -38,6 +37,7 @@ class ProductSearchView(APIView):
         product = Product.objects.filter(name__icontains=search_query) | Product.objects.filter(category__name__incontains=search_query)
         serializer = ProductSerializer(product, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 class WishListView(APIView):
     permission_classes = [IsAuthenticated]
 
