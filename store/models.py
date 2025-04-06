@@ -21,7 +21,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
     text = models.TextField()
-    rating = models.IntegerField
+    rating = models.IntegerField()
 
 class Payment(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE)

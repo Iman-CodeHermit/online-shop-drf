@@ -18,12 +18,10 @@ class CartView(APIView):
         cart, _ = Cart.objects.get_or_create(user=request.user)
         product_id = request.data.get("product")
         quantity = int(request.data.get("quantity", 1))
-
         item, created = CartItem.objects.get_or_create(cart=cart, product_id=product_id)
         if not created:
             item.quantity += quantity
             item.save()
-
         return Response({"message": "Product added to cart"}, status=status.HTTP_201_CREATED)
 
 class CartItemDeleteView(APIView):
@@ -52,7 +50,7 @@ class CheckoutView(APIView):
             OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity,
                                      price=item.total_price())
 
-        cart.items.all().delete()  # بعد از پرداخت سبد خرید پاک شود
+        cart.items.all().delete()
 
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 

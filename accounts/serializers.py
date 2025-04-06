@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-
+from .models import Address
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
@@ -22,3 +22,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if data['password'] != data['password2']:
             raise serializers.ValidationError('password must match')
         return data
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'
+        read_only_fields = ['user']
+
